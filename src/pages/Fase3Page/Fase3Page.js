@@ -1,42 +1,19 @@
-import styled from "styled-components";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { FaseContainer,Answer,FaseImage,Text,Title } from "../../assets/styles/faseStyle";
 
 export default function Fase3Page() {
+  const navigate = useNavigate()
+  const [light, setLight] = useState(false)
   return (
-    <FaseContainer>
-      <Title>#3</Title>
-      <FaseImage src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Refresh_icon.png"></FaseImage>
-      <Text>299.792.458 m/s</Text>
-      <Answer>Responder</Answer>
+    <FaseContainer light={light}>
+      <Title light={light}>#3</Title>
+      <FaseImage 
+        onClick={()=> setLight(!light)} 
+        src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Refresh_icon.png">
+      </FaseImage>
+      <Text light={light}>299.792.458 m/s</Text>
+      <Answer onClick={()=> window.prompt(`Resposta:`)==="samuel" && navigate("/fase4")}>Responder</Answer>
     </FaseContainer>
   )
 }
-
-const FaseContainer = styled.div `
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Title = styled.div `
-  font-size: 35px;
-  font-weight: 700;
-  color: #fff;
-  margin-top: 30px;
-  margin-bottom: 50px;
-` 
-const FaseImage = styled.img `
-  height: 200px;
-  width: 200px;
-  background-color: white;
-  margin-bottom: 50px;
-`
-const Text = styled.div `
-  font-size: 25px;
-  color: #fff;
-  margin-bottom: 30px;
-`
-const Answer = styled.button `
-  
-`
-
