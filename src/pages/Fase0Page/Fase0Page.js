@@ -2,11 +2,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Tutorial from "./Tutorial";
 import { FaseContainer,Answer,FaseImage,Text,Title } from "../../assets/styles/faseStyle";
+import { Helmet } from "react-helmet";
 
 export default function Fase0Page() {
   const [tutorial, setTutorial] = useState(true);
   const navigate = useNavigate()
   return (
+    <>
+    <Helmet>
+      <title>Tutorial</title>
+    </Helmet>
     <FaseContainer>
       {tutorial && <Tutorial setTutorial={setTutorial}/>}
       <Title>#0</Title>
@@ -17,6 +22,7 @@ export default function Fase0Page() {
         Responder
       </Answer>
     </FaseContainer>
+    </>
   )
 }
 

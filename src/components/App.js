@@ -14,11 +14,14 @@ import EndPage from "../pages/EndPage/EndPage";
 import Menu from "./Menu";
 import MenuProvider from "../contexts/MenuContext";
 import MenuBox from "./MenuBox";
+import LightProvider from "../contexts/LightContext";
+import AuxPage from "../pages/Fase4Page/AuxPage";
 
 export default function App() {
   return (
     <BrowserRouter>
       <MenuProvider>
+      <LightProvider> 
         <Menu/>
         <MenuBox/>
         <Routes>
@@ -28,11 +31,13 @@ export default function App() {
           <Route path="/batata" element={<Fase0Page/>}/>
           <Route path="/amor" element={<Fase1Page/>}/>
           <Route path="/fase2" element={<Fase2Page/>}/>
-          <Route path="/fase3" element={<Fase3Page/>}/>
-          <Route path="/fase4" element={<Fase4Page/>}/>
-          <Route path="/fase5" element={<Fase5Page/>}/>
+          <Route path="/wiki" element={<Fase3Page/>}/>
+          <Route path="/qui_manca_qualcosa" element={<Fase4Page/>}/>
+          <Route path="/13" element={<Fase5Page/>}/>
           <Route path="/fim" element={<EndPage/>}/>
+          <Route path="/trasfigurazione" element={<AuxPage/>}/>
         </Routes>
+      </LightProvider>   
       </MenuProvider>
     </BrowserRouter>
   );

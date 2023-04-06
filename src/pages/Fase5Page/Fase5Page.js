@@ -1,49 +1,29 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Anfitras from "../../assets/imgs/Anfitras.webp"
-
-//aba=3   nomeImg= 17 
+import { FaseContainer,Answer,FaseImage,Text,Title } from "../../assets/styles/faseStyle";
+import cesar from "../../assets/imgs/Xjmvçõzn zh yznomjçjn Iph vmqjmzyj.jpeg"
+import { Helmet } from "react-helmet";
 
 export default function Fase5Page() {
   const navigate = useNavigate()
   return (
+    <>
+    <Helmet>
+      <title>22</title>
+    </Helmet>
     <FaseContainer>
       <Title>#5</Title>
-      <FaseImage src={Anfitras}></FaseImage>
-      <Text>Aqui eu to pensando em usar Atlante Alfabeto</Text>
-      <Answer onClick={()=> window.prompt(`Resposta:`)==="samuel" && navigate("/fim")}>Responder</Answer>
+      <Fase5Img src={cesar}></Fase5Img>
+      <Text>Iy ras wivme iwwe qypliv uyi glsve</Text>
+      <Answer onClick={()=> window.prompt(`Resposta:`)==="erinias" && navigate("/fim")}>Responder</Answer>
     </FaseContainer>
+    </>
   )
 }
 
-const FaseContainer = styled.div `
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+const Fase5Img = styled(FaseImage)`
+width: 250px;
+  height: auto;
+`
 
-const Title = styled.div `
-  font-size: 35px;
-  font-weight: 700;
-  color: #fff;
-  margin-top: 30px;
-  margin-bottom: 50px;
-` 
-const FaseImage = styled.img `
-  height: 200px;
-  width: 200px;
-  margin-bottom: 50px;
-  
-  
   //filter: drop-shadow(1px 1px 4px red);
-`
-const Text = styled.div `
-  font-size: 25px;
-  color: #fff;
-  margin-bottom: 30px;
-`
-const Answer = styled.button `
-  
-`
-
