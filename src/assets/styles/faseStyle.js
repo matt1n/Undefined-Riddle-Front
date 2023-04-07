@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const FaseContainer = styled.div `
-  background-color: ${props=> props.light && "#fff"};
+  background-color: ${props=> props.light ? "#fff" : "rgb(24, 29, 29)"};
+  //background-color: red;
   height: 100%;
   display: flex;
   flex-direction: column;

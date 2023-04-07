@@ -7,7 +7,7 @@ export default function AuxPage() {
     return (
         <>
             <Helmet>
-                <title>Essa não é uma fase!</title>
+                <title>Quem quer pizza?</title>
             </Helmet>
             <FaseAuxContainer crise={crise}>
                 <FaseAuxImage src={crise}/>
