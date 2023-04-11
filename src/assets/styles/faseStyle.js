@@ -14,6 +14,11 @@ export const FullscreenContainer = styled.div `
   justify-content: center;
 `
 
+export const ImageBox = styled.div`
+  width: ;
+  height: ;
+`
+
 export const FaseContainer = styled.div `
   background-color: ${props=> props.light ? "#fff" : "rgb(24, 29, 29)"};
   //background-color: red;

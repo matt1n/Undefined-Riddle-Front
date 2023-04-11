@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContainer } from "../../assets/styles/faseStyle";
 import cesar from "../../assets/imgs/Xjmvçõzn zh yznomjçjn Iph vmqjmzyj.jpeg"
 import { Helmet } from "react-helmet";
-import backgroundImg from "../../assets/imgs/fiosbrilholow.png"
+import backgroundImg from "../../assets/imgs/background3.gif"
 
 
 export default function Fase5Page() {

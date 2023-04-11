@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContainer } from "../../assets/styles/faseStyle";
 import { Helmet } from "react-helmet";
-import backgroundImg from "../../assets/imgs/fiosbrilholow.png"
+import backgroundImg from "../../assets/imgs/background3.gif"
 
 
 export default function Fase1Page() {

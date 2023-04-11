@@ -3,7 +3,7 @@ import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContai
 import fios from "../../assets/imgs/Fios.png"
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import backgroundImg from "../../assets/imgs/fiosbrilholow.png"
+import backgroundImg from "../../assets/imgs/background3.gif"
 
 
 export default function Fase2Page() {

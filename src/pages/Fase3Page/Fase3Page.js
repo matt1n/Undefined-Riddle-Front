@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { LightContext } from "../../contexts/LightContext";
 import { Helmet } from "react-helmet";
 import clicked from "../../assets/imgs/clickedbutton.png";
-import backgroundImg from "../../assets/imgs/fiosbrilholow.png";
+import backgroundImg from "../../assets/imgs/background3.gif"
 
 
 export default function Fase3Page() {
