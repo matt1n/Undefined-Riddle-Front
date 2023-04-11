@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaseContainer,Answer,FaseImage,Text,Title } from "../../assets/styles/faseStyle";
+import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContainer } from "../../assets/styles/faseStyle";
 import styled from "styled-components";
 import { LightContext } from "../../contexts/LightContext";
 import { Helmet } from "react-helmet";
-import clicked from "../../assets/imgs/clickedbutton.png"
+import clicked from "../../assets/imgs/clickedbutton.png";
+import backgroundImg from "../../assets/imgs/fiosbrilholow.png";
+
 
 export default function Fase3Page() {
   const {light, setLight} = useContext(LightContext)
@@ -14,6 +16,8 @@ export default function Fase3Page() {
     <Helmet>
       <title >Não gosto desse nome</title>
     </Helmet>
+    <Background src={backgroundImg}/>
+    <FullscreenContainer>
     <FaseContainer light={light}>
       <Title light={light}>#3</Title>
       <Fase3Img
@@ -23,7 +27,7 @@ export default function Fase3Page() {
       <LigthButton onClick={()=> setLight(!light)} ></LigthButton>
       <Text light={light}>{!light ? "299.792.458 m/s" : "14 59"}</Text>
       <Answer onClick={()=> window.prompt(`Resposta:`)==="pirilampo" && navigate("/qui_manca_qualcosa")}>Responder</Answer>
-    </FaseContainer>
+    </FaseContainer></FullscreenContainer>
     </>
   )
 }

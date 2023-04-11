@@ -18,6 +18,7 @@ export default function AuxPage() {
 
 const FaseAuxContainer = styled(FaseContainer)`
     background-color: black;
+    width: 100vw;
 `
 
 const FaseAuxImage = styled(FaseImage)`
