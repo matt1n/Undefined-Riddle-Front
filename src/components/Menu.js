@@ -24,5 +24,8 @@ export default function Menu(){
 const ContainerMenu = styled.div`
     position: fixed;
     top: 10px;
-    right: 16%;
+    right: 18%;
+    @media (max-width: 1150px) {
+    right: 1%;
+  }
 `

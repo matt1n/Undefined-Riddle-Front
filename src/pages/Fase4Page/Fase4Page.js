@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContainer } from "../../assets/styles/faseStyle";
+import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContainer, ImageBox } from "../../assets/styles/faseStyle";
 import styled from "styled-components";
 import Atlantis from "../../assets/imgs/Atlantis.png"
 import { Helmet } from "react-helmet";
@@ -17,9 +17,11 @@ export default function Fase4Page() {
     <FullscreenContainer>
     <FaseContainer>
       <Title>#4</Title>
-      <Fase4Image src={Atlantis}></Fase4Image>
+      <ImageBox>
+        <Fase4Image src={Atlantis}></Fase4Image>
+      </ImageBox>
       <Text>Quem falta para a festa?</Text>
-      <Answer onClick={()=> window.prompt(`Resposta:`)==="leonardo" && navigate("/fase5")}>Responder</Answer>
+      <Answer onClick={()=> window.prompt(`Resposta:`)==="leonardo" && navigate("/fase5")}><a className="testing" data-text="Responder">Responder</a></Answer>
     </FaseContainer></FullscreenContainer>
     </>
   )
@@ -28,4 +30,12 @@ export default function Fase4Page() {
 const Fase4Image = styled(FaseImage)`
 width: auto;
 height: 350px;
+@media (max-width: 600px) {
+    width: 400px;
+    height: auto;
+  }
+  @media(max-width: 400px) {
+  width: 100%;
+  height: auto;
+}
 `

@@ -5,6 +5,9 @@ position: fixed;
 z-index: -3;
 width: 100%;
 height: 100%;
+@media(max-width: 1150px) {
+  display: none;
+}
 `
 
 export const FullscreenContainer = styled.div `
@@ -14,20 +17,24 @@ export const FullscreenContainer = styled.div `
   justify-content: center;
 `
 
-export const ImageBox = styled.div`
-  width: ;
-  height: ;
-`
-
 export const FaseContainer = styled.div `
   background-color: ${props=> props.light ? "#fff" : "rgb(24, 29, 29)"};
-  //background-color: red;
+  background: ${props=> props.light 
+    ? 
+      "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 96%, rgba(255,255,255,0) 100%)" 
+    : 
+     "linear-gradient(90deg, rgba(24, 29, 29,0) 0%, rgba(24, 29, 29,1) 4%, rgba(24, 29, 29,1) 96%, rgba(24, 29, 29,0) 100%)"};
   height: 100%;
   width: 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+
+  @media (max-width: 1150px) {
+    width: 100%;
+    background-color: ${props=> props.light ? "#fff" : "rgb(24, 29, 29)"};
+  }
 `;
 
 export const Title = styled.div `
@@ -36,20 +43,42 @@ export const Title = styled.div `
   color: ${props=> props.light ? "#000" : "#fff"};
   margin-top: 30px;
   margin-bottom: 50px;
+  @media(max-width: 320px) {
+    margin-top: 20px;
+    margin-bottom: 25px;
+  }
 ` 
+export const ImageBox = styled.div`
+  width: 480px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+  
+  @media(max-width: 600px) {
+  width: 100%;
+  height: 300px;
+}
+  @media(max-width: 320px){
+    margin-bottom: 25px;
+  }
+`
+
 export const FaseImage = styled.img `
   height: 200px;
   width: 200px;
   background-color: white;
-  margin-bottom: 50px;
 `
 export const Text = styled.div `
   font-size: 25px;
   color: ${props=> props.light ? "#000" : "#fff"};
   margin-bottom: 30px;
-`
-export const Answer = styled.button `
   
+  @media(max-width: 320px) {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
 `
 
 export const Start = styled.section` 
@@ -180,6 +209,36 @@ a {
   100% {
     clip: rect(0px, 450px, 0px, 0px);
   }
+}
+
+`
+
+
+export const Answer = styled(Start)`
+margin-top: 10px;
+a{
+  color: ${props=> props.light ? "#000" :"#ffffff"};
+}
+  .testing{
+    border: ${props=> props.light ? "1px solid #000" : "1px solid #fff"};
+    &:after, &:before{
+      content: 'Responder';
+      background: ${props=> props.light ? "#000" :"#ffffff"};
+      color: ${props=> props.light ? "#ffffff" :"#000"};
+    }
+    &:hover {
+      background:  ${props=> props.light ? "#000" :"#ffffff"};
+      color: ${props=> props.light ? "#ffffff" :"#000"};
+    }
+  }
+
+  @media(max-width: 320px) {
+    a{
+      height: 40px;
+    }
+    .testing {
+      padding: 13px 30px;
+    }
 }
 
 `

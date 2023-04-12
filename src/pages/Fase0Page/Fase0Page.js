@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Tutorial from "./Tutorial";
-import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContainer, ImageBox } from "../../assets/styles/faseStyle";
+import { FaseContainer,FaseImage,Text,Title, Background, FullscreenContainer, ImageBox, Start, Answer } from "../../assets/styles/faseStyle";
 import { Helmet } from "react-helmet";
 import backgroundImg from "../../assets/imgs/background3.gif"
+import styled from "styled-components";
 
 export default function Fase0Page() {
   const [tutorial, setTutorial] = useState(true);
@@ -22,9 +23,8 @@ export default function Fase0Page() {
         <FaseImage src="https://images.emojiterra.com/google/noto-emoji/v2.034/512px/1f50e.png"></FaseImage>
         </ImageBox>
         <Text>URL</Text>
-        <Answer 
-        onClick={()=> window.prompt(`Resposta:`)==="batata" && navigate("/amor")}>
-          Responder
+        <Answer onClick={()=> window.prompt(`Resposta:`)==="batata" && navigate("/amor")}>
+          <a className="testing" data-text="Responder">Responder</a>
         </Answer>
       </FaseContainer></FullscreenContainer>
     </>

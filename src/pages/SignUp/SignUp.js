@@ -176,6 +176,12 @@ span:last-child {
   }
   
 }
+@media(max-width: 600px) {
+  font-size: 3rem;
+}
+@media(max-width: 360px) {
+  font-size: 2.5rem;
+}
 `
 
 const Text3 = styled.div`
@@ -239,6 +245,12 @@ const Text3 = styled.div`
   62%{
     transform: translate(-22px,5px) skew(21deg); 
   }
+}
+@media(max-width: 600px) {
+  font-size: 3rem;
+}
+@media(max-width: 360px) {
+  font-size: 2.5rem;
 }
 `
 const Test = styled.div`

@@ -42,7 +42,10 @@ const MenuBoxContainer = styled.div`
     position: fixed;
     z-index: 2;
     top: 65px;
-    right: 16%;
+    right: 18%;
+    @media (max-width: 1150px) {
+    right: 1%;
+  }
 `
 const MenuBoxButton = styled.button`
     height: 35px;
