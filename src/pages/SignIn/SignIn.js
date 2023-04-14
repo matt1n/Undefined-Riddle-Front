@@ -1,8 +1,28 @@
 import styled from "styled-components"
 import { Start } from "../../assets/styles/faseStyle"
+import { useState } from "react"
+import axios from "axios"
 
 export default function SignIn() {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const url = process.env.REACT_APP_API_BASE_URL;
+  
+  async function submit(event){
+    event.preventDefault()
+
+    try {
+      const user = await axios.post(`${url}/users/signin`, {email,password})
+      console.log(user.data)
+      alert("foi")
+    } catch (error) {
+      alert("email ou senha incorretos")
+    }
+    
+  }
+
   return (
+
     <SignInContainer>
       <Test>
         <Text>
@@ -12,11 +32,12 @@ export default function SignIn() {
         </Text>
         <Text3 title="Riddle">Riddle</Text3>
       </Test>
-      <SignUpForm>
-        <Input type={"email"} placeholder="Email"></Input>
-        <Input type={"password"} placeholder="Senha"></Input>
-        <SignInButton><a class="testing" data-text="Começar">Entrar</a></SignInButton>
-      </SignUpForm>
+      <SignInForm name="signin" onSubmit={submit}>
+        <Input type={"email"} placeholder="Email" onChange={e=> setEmail(e.target.value)}></Input>
+        <Input type={"password"} placeholder="Senha" onChange={e=> setPassword(e.target.value)}></Input>
+        <SignInButton type="submit">Entrar</SignInButton>
+
+      </SignInForm>
     </SignInContainer>
   )
 }
@@ -30,7 +51,7 @@ const SignInContainer = styled.div`
   flex-direction: column;
 `
 
-const SignUpForm = styled.form`
+const SignInForm = styled.form`
   display: flex;
   flex-direction: column;
 `
@@ -107,18 +128,6 @@ const Input = styled.input`
     transform: translate(-22px,5px) skew(21deg); 
   }
 }
-`
-const Button = styled.button`
-  margin-top: 13px;
-  height: 30px;
-`
-
-const Title = styled.div`
-  color: white;
-  font-weight: 700;
-  font-size: 100px;
-  text-align: center;
-  margin-bottom: 15vh;
 `
 const Text = styled.p`
   color: white;
@@ -266,9 +275,8 @@ margin-bottom: 15vh;
 
 const SignInButton = styled(Start)`
 margin-top: 10px;
-  .testing{
     &:after, &:before{
       content: 'Entrar';
     }
-  }
+
 `

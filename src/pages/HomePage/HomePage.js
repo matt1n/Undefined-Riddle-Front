@@ -169,18 +169,18 @@ const Text3 = styled.div`
 `
 
 const SignIn = styled(Start)`
-  .testing{
+
     &:after, &:before{
       content: 'Sign-in';
-    }
+
   }
 `
 const SignUp = styled(Start)`
-  .testing{
+
     &:after, &:before{
       content: 'Sign-up';
     }
-  }
+
 `
 
 const Test = styled.div`

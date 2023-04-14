@@ -2,6 +2,9 @@ import styled from "styled-components"
 import { Start } from "../../assets/styles/faseStyle"
 
 export default function SignUp() {
+  function submit(event){
+    event.preventDefault()
+  }
   return (
     <SignUpContainer>
       <Test>
@@ -12,12 +15,12 @@ export default function SignUp() {
         </Text>
         <Text3 title="Riddle">Riddle</Text3>
       </Test>
-      <SignUpForm>
+      <SignUpForm onSubmit={submit}>
         <Input type={"email"} placeholder="Email"></Input>
         <Input type={"text"} placeholder="Nome"></Input>
         <Input type={"password"} placeholder="Senha"></Input>
         <Input type={"password"} placeholder="Confirme sua senha"></Input>
-        <SignUpButton><a class="testing" data-text="Começar">Registrar</a></SignUpButton>
+        <SignUpButton type="submit">Registrar</SignUpButton>
       </SignUpForm>
     </SignUpContainer>
   )
@@ -109,10 +112,6 @@ const Input = styled.input`
     transform: translate(-22px,5px) skew(21deg); 
   }
 }
-`
-const Button = styled.button`
-  margin-top: 13px;
-  height: 30px;
 `
 
 const Text = styled.p`
@@ -261,9 +260,8 @@ margin-bottom: 15vh;
 `
 const SignUpButton = styled(Start)`
 margin-top: 10px;
-  .testing{
     &:after, &:before{
       content: 'Registrar';
     }
-  }
+
 `

@@ -81,19 +81,19 @@ export const Text = styled.div `
 }
 `
 
-export const Start = styled.section` 
+export const Start = styled.button` 
 
 width: 250px;
-margin-bottom: 20px;
+margin-bottom: 15px;
+border: 1px solid #fff;
+background-color: transparent;
 
-a {
   display: flex;
   color: white;
   text-decoration: none;
   height: 50px;
-}
 
-.testing {
+
     display: block;
     position: relative;
     background: none;
@@ -109,7 +109,6 @@ a {
     border: 1px solid #fff;
     border-radius: 10px;
     transition: all .2s ease;
-    margin: 0 auto;
   
     &:before, 
     &:after {
@@ -152,7 +151,6 @@ a {
         animation: glitch-test 2s infinite linear alternate;
     }
   
-}
 
 @keyframes glitch-test {
   0% {
@@ -216,10 +214,10 @@ a {
 
 export const Answer = styled(Start)`
 margin-top: 10px;
-a{
+
   color: ${props=> props.light ? "#000" :"#ffffff"};
-}
-  .testing{
+
+
     border: ${props=> props.light ? "1px solid #000" : "1px solid #fff"};
     &:after, &:before{
       content: 'Responder';
@@ -230,7 +228,7 @@ a{
       background:  ${props=> props.light ? "#000" :"#ffffff"};
       color: ${props=> props.light ? "#ffffff" :"#000"};
     }
-  }
+
 
   @media(max-width: 320px) {
     a{

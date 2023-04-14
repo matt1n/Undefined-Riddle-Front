@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Tutorial from "./Tutorial";
-import { FaseContainer,FaseImage,Text,Title, Background, FullscreenContainer, ImageBox, Start, Answer } from "../../assets/styles/faseStyle";
+import { FaseContainer,FaseImage,Text,Title, Background, FullscreenContainer, ImageBox, Answer } from "../../assets/styles/faseStyle";
 import { Helmet } from "react-helmet";
 import backgroundImg from "../../assets/imgs/background3.gif"
-import styled from "styled-components";
 
 export default function Fase0Page() {
   const [tutorial, setTutorial] = useState(true);
