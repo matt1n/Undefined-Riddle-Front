@@ -7,14 +7,14 @@ export default function HomePage() {
 
   return (
     <HomeContainer>
-      <Test><Text>
+      <Test><Text2>
       <span aria-hidden="true">Undefined</span>
     Undefined
     <span aria-hidden="true">Undefined</span>
-      </Text><Text3 title="Riddle">Riddle</Text3></Test>
-      <Start onClick={()=> navigate("/batata")}><a class="testing" data-text="Começar">Começar</a></Start>
-      <SignIn onClick={()=> navigate("/login")}><a class="testing" data-text="Começar">Sign-in</a></SignIn>
-      <SignUp onClick={()=> navigate("/registro")}><a class="testing" data-text="Começar">Sign-up</a></SignUp>
+      </Text2><Text3 title="Riddle">Riddle</Text3></Test>
+      <Start onClick={()=> navigate("/batata")}>Começar</Start>
+      <SignIn onClick={()=> navigate("/login")}>Sign-in</SignIn>
+      <SignUp onClick={()=> navigate("/registro")}>Sign-up</SignUp>
     </HomeContainer>
   )
 }
@@ -28,7 +28,7 @@ const HomeContainer = styled.div`
   flex-direction: column;
 `
 
-const Text = styled.p`
+export const Text2 = styled.p`
   color: white;
   font-size: 5rem;
   font-weight: bold;
@@ -97,7 +97,7 @@ span:last-child {
 }
 `
 
-const Text3 = styled.div`
+export const Text3 = styled.div`
   animation: glitch 1s linear infinite;
   color: #fff;
   font-size: 5rem;

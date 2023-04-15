@@ -2,11 +2,16 @@ import styled from "styled-components"
 import { Start } from "../../assets/styles/faseStyle"
 import { useState } from "react"
 import axios from "axios"
+import { useContext } from "react"
+import { UserContext } from "../../contexts/UserContext"
+import { useNavigate } from "react-router-dom"
 
 export default function SignIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const url = process.env.REACT_APP_API_BASE_URL;
+  const {setUser} = useContext(UserContext)
+  const navigate = useNavigate()
   
   async function submit(event){
     event.preventDefault()
@@ -14,7 +19,10 @@ export default function SignIn() {
     try {
       const user = await axios.post(`${url}/users/signin`, {email,password})
       console.log(user.data)
+      localStorage.setItem("undefinedUser", user.data.token)
+      setUser(user.data.token)
       alert("foi")
+      navigate("/batata")
     } catch (error) {
       alert("email ou senha incorretos")
     }

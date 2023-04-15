@@ -3,16 +3,59 @@ import { useNavigate } from "react-router-dom";
 import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContainer, ImageBox } from "../../assets/styles/faseStyle";
 import styled from "styled-components";
 import { LightContext } from "../../contexts/LightContext";
-import { Helmet } from "react-helmet";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import clicked from "../../assets/imgs/clickedbutton.png";
 import backgroundImg from "../../assets/imgs/background3.gif"
+import { useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import axios from "axios";
+import { useEffect } from "react";
 
 
 export default function Fase3Page() {
   const {light, setLight} = useContext(LightContext)
   const navigate = useNavigate()
+  const {user} = useContext(UserContext)
+  const [permission, setPermission] = useState(false)
+  const url = process.env.REACT_APP_API_BASE_URL
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user}`,
+    },
+  };
+  async function permissionVerify(){
+    if(!user){
+      navigate("/login")
+    }
+    try {
+      const sim = await axios.get(`${url}/phases/3`, config)
+      setPermission(sim.data)
+      if (!sim.data) {
+        navigate("/error")
+      }
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+  async function answer(){
+    const answer = window.prompt(`Resposta:`)
+    try {
+      const response = await axios.post(`${url}/answers/3`, {answer}, config)
+      if (response.data) {
+        navigate("/qui_manca_qualcosa")
+      }
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
+  useEffect(()=> {
+    permissionVerify()
+  },[permission])
+
   return (
     <>
+    {permission && <HelmetProvider>
     <Helmet>
       <title >Não gosto desse nome</title>
     </Helmet>
@@ -28,9 +71,10 @@ export default function Fase3Page() {
       </ImageBox>
       <LigthButton onClick={()=> setLight(!light)} ></LigthButton>
       <Text light={light}>{!light ? "299.792.458 m/s" : "14 59"}</Text>
-      <Answer light={light} sonClick={()=> window.prompt(`Resposta:`)==="pirilampo" && navigate("/qui_manca_qualcosa")}><a className="testing" data-text="Responder">Responder</a></Answer>
+      <Answer light={light} onClick={()=> answer()}>Responder</Answer>
     </FaseContainer></FullscreenContainer>
-    </>
+    
+    </HelmetProvider>}</>
   )
 }
 

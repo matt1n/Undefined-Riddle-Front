@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {TfiMenu} from "react-icons/tfi"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { MenuContext } from "../contexts/MenuContext";
 import { LightContext } from "../contexts/LightContext";
 import { useHref } from "react-router-dom";

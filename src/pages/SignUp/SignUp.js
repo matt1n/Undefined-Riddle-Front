@@ -1,9 +1,29 @@
 import styled from "styled-components"
 import { Start } from "../../assets/styles/faseStyle"
+import { useState } from "react"
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
-  function submit(event){
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const url = process.env.REACT_APP_API_BASE_URL;
+  const navigate = useNavigate()
+
+  async function submit(event){
     event.preventDefault()
+    if (password!==confirm){
+      alert("Senhas não coincidem")
+    } else {
+      try {
+        const user = await axios.post(`${url}/users`, {email, password})
+        console.log(user.data)
+        navigate("/batata")
+      } catch (error) {
+        console.log(error.response.data)
+      }
+    }
   }
   return (
     <SignUpContainer>
@@ -16,10 +36,9 @@ export default function SignUp() {
         <Text3 title="Riddle">Riddle</Text3>
       </Test>
       <SignUpForm onSubmit={submit}>
-        <Input type={"email"} placeholder="Email"></Input>
-        <Input type={"text"} placeholder="Nome"></Input>
-        <Input type={"password"} placeholder="Senha"></Input>
-        <Input type={"password"} placeholder="Confirme sua senha"></Input>
+        <Input type={"email"} placeholder="Email" onChange={e=> setEmail(e.target.value)}></Input>
+        <Input type={"password"} placeholder="Senha" onChange={e=> setPassword(e.target.value)}></Input>
+        <Input type={"password"} placeholder="Confirme sua senha" onChange={e=> setConfirm(e.target.value)}></Input>
         <SignUpButton type="submit">Registrar</SignUpButton>
       </SignUpForm>
     </SignUpContainer>

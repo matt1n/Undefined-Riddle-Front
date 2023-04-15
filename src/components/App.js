@@ -16,12 +16,16 @@ import MenuProvider from "../contexts/MenuContext";
 import MenuBox from "./MenuBox";
 import LightProvider from "../contexts/LightContext";
 import AuxPage from "../pages/Fase4Page/AuxPage";
+import UserProvider from "../contexts/UserContext";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import ThanksPage from "../pages/ThanksPage/ThanksPage";
 
 export default function App() {
   return (
     <BrowserRouter>
       <MenuProvider>
       <LightProvider> 
+      <UserProvider>
         <Menu/>
         <MenuBox/>
         <Routes>
@@ -36,7 +40,10 @@ export default function App() {
           <Route path="/13" element={<Fase5Page/>}/>
           <Route path="/fim" element={<EndPage/>}/>
           <Route path="/trasfigurazione" element={<AuxPage/>}/>
+          <Route path="/error" element={<ErrorPage/>}/>
+          <Route path="/obrigado" element={<ThanksPage/>}/>
         </Routes>
+      </UserProvider>
       </LightProvider>   
       </MenuProvider>
     </BrowserRouter>

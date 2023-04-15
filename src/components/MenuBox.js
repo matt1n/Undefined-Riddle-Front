@@ -8,9 +8,13 @@ export default function MenuBox() {
     const {menuActive, setMenuActive} = useContext(MenuContext)
     const [fases, setFases] = useState(false)
     const [login, setLogin] = useState(false)
+    function menuButton(){
+        setMenuActive(!menuActive)
+        setFases(false)
+    }
     return(
         <>
-        <MenuScreen menuActive={menuActive} onClick={()=> (setMenuActive(!menuActive), setFases(false))}/>
+        <MenuScreen menuActive={menuActive} onClick={()=>menuButton()}/>
         <MenuBoxContainer menuActive={menuActive}>
             <MenuBoxButton onClick={()=> setFases(!fases)}>Fases</MenuBoxButton>
             {fases && <>

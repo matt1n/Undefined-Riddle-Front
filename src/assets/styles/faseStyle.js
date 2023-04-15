@@ -18,12 +18,12 @@ export const FullscreenContainer = styled.div `
 `
 
 export const FaseContainer = styled.div `
-  background-color: ${props=> props.light ? "#fff" : "rgb(24, 29, 29)"};
+  background-color: ${props=> props.light ? "#fff" : "rgb(0, 0, 0)"};
   background: ${props=> props.light 
     ? 
       "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 96%, rgba(255,255,255,0) 100%)" 
     : 
-     "linear-gradient(90deg, rgba(24, 29, 29,0) 0%, rgba(24, 29, 29,1) 4%, rgba(24, 29, 29,1) 96%, rgba(24, 29, 29,0) 100%)"};
+     "linear-gradient(90deg, rgba(24, 29, 29,0) 0%, rgba(0, 0, 0,1) 4%, rgba(0, 0, 0,1) 96%, rgba(24, 29, 29,0) 100%)"};
   height: 100%;
   width: 70%;
   display: flex;
@@ -33,7 +33,7 @@ export const FaseContainer = styled.div `
 
   @media (max-width: 1150px) {
     width: 100%;
-    background-color: ${props=> props.light ? "#fff" : "rgb(24, 29, 29)"};
+    background-color: ${props=> props.light ? "#fff" : "rgb(0, 0, 0)"};
   }
 `;
 
@@ -231,12 +231,8 @@ margin-top: 10px;
 
 
   @media(max-width: 320px) {
-    a{
       height: 40px;
-    }
-    .testing {
       padding: 13px 30px;
-    }
 }
 
 `
