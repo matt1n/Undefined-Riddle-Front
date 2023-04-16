@@ -8,9 +8,11 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { useEffect } from "react";
 import axios from "axios";
+import {VscQuestion} from "react-icons/vsc"
+import styled from "styled-components";
 
 export default function Fase0Page() {
-  const [tutorial, setTutorial] = useState(true);
+  const [tutorial, setTutorial] = useState(false);
   const {user} = useContext(UserContext)
   const navigate = useNavigate()
   const [permission, setPermission] = useState(false)
@@ -62,6 +64,9 @@ export default function Fase0Page() {
     <FullscreenContainer>
       <FaseContainer>
         {tutorial && <Tutorial setTutorial={setTutorial}/>}
+        <ContainerTip onClick={()=> setTutorial(true)}>
+          <VscQuestion color="white" size={45}></VscQuestion>
+        </ContainerTip>
         <Title>#0</Title>
         <ImageBox>
         <FaseImage src="https://images.emojiterra.com/google/noto-emoji/v2.034/512px/1f50e.png"></FaseImage>
@@ -76,4 +81,13 @@ export default function Fase0Page() {
     </HelmetProvider>}</>
   )
 }
+
+const ContainerTip = styled.div`
+  position: fixed;
+  top: 10px;
+  left: 18%;
+  @media (max-width: 1150px) {
+    left: 1%;
+  }
+`
 

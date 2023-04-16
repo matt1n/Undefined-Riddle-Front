@@ -1,9 +1,16 @@
 import styled from "styled-components"
 import { Text } from "../../assets/styles/faseStyle"
+import { HelmetProvider, Helmet } from "react-helmet-async";
 
 export default function ErrorPage() {
   return (
     <>
+    <HelmetProvider>
+      <Helmet>
+        <title>
+          ???????????
+        </title>
+      </Helmet>
       <ErrorContainer>
         <Test>
           <Text2>
@@ -17,6 +24,7 @@ export default function ErrorPage() {
           <span aria-hidden="true">VOCÊ NÃO DEVERIA ESTAR AQUI</span></Text2>
         </Test>
       </ErrorContainer>
+      </HelmetProvider>
     </>
   )
 }

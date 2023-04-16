@@ -1,17 +1,66 @@
 import { useNavigate } from "react-router-dom"
+import {useContext, useEffect, useState} from "react"
 import styled from "styled-components"
 import { Answer, Start } from "../../assets/styles/faseStyle";
+import axios from "axios";
+import { UserContext } from "../../contexts/UserContext";
+import { HelmetProvider, Helmet } from "react-helmet-async";
 
 export default function EndPage() {
   const navigate = useNavigate();
 
-  async function answer(){
-    const name = window.prompt("Me conte, como quer ser esternizado?")
-    alert(`Olá ${name}`)
-    navigate("/obrigado")
+  const {user} = useContext(UserContext)
+  const [permission, setPermission] = useState(false)
+  const url = process.env.REACT_APP_API_BASE_URL
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user}`,
+    },
+  };
+  async function permissionVerify(){
+    if(!user){
+      navigate("/login")
+    }
+    try {
+      const sim = await axios.get(`${url}/phases/end/6`, config)
+      if (sim.data==="next") {
+        navigate("/obrigado")
+      }
+      setPermission(sim.data)
+      if (!sim.data) {
+        navigate("/error")
+      }
+    } catch (error) {
+      console.log(error.response.data)
+    }
   }
 
+  async function answer(){
+    const name = window.prompt("Me conte, como quer ser esternizado?")
+    if (name) {
+      try {
+      await axios.post(`${url}/hall/eternize`, {name}, config)
+      navigate("/obrigado")
+    } catch (error) {
+      alert(error.response.data)
+    }
+  }
+  }
+
+  async function thanks(){
+    const response = await axios.get()
+  }
+
+  useEffect(()=> {
+    permissionVerify()
+  },[])
+
   return (
+    <>
+    {permission && <HelmetProvider>
+      <Helmet>
+        <title>Fim?</title>
+      </Helmet>
     <EndContainer>
       <Text2>
             <span aria-hidden="true">Responda uma última pergunta</span>
@@ -24,8 +73,10 @@ export default function EndPage() {
             <span aria-hidden="true">E me permita te eternizar</span>
       </Text2>
       <Text3 title="Quem é você?">Quem é você?</Text3>
-      <Responder onClick={answer}>Responder</Responder>
+      <Responder onClick={()=> answer()}>Responder</Responder>
     </EndContainer>
+    </HelmetProvider>}
+    </>
   )
 }
 

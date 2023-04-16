@@ -1,9 +1,59 @@
 import styled from "styled-components"
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import { Start } from "../../assets/styles/faseStyle"
+import { useContext, useEffect, useState } from "react"
+import { UserContext } from "../../contexts/UserContext"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
 
 export default function ThanksPage(){
-  const names = ["batata", "arroz", "gasfdafd", "aaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaa","batata", "arroz", "gasfdafd", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","batata", "arroz", "gasfdafd", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"]
+  const [names, setNames] = useState([])
+  const navigate = useNavigate()
+  const {user} = useContext(UserContext)
+  const [permission, setPermission] = useState(false)
+  const url = process.env.REACT_APP_API_BASE_URL
+  const config = {
+    headers: {
+      Authorization: `Bearer ${user}`,
+    },
+  };
+  async function permissionVerify(){
+    if(!user){
+      navigate("/login")
+    }
+    try {
+      const sim = await axios.get(`${url}/phases/6`, config)
+      console.log(sim)
+      setPermission(sim.data)
+      if (!sim.data) {
+        navigate("/error")
+      }
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
+  async function getNames(){
+    try {
+      const response = await axios.get(`${url}/hall`, config)
+      setNames(response.data)
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
+  useEffect(()=> {
+    permissionVerify()
+    getNames()
+  },[])
     return(
+      <>
+      {permission && <HelmetProvider>
+        <Helmet>
+          <title>
+            Obrigado por jogar!
+          </title>
+        </Helmet>
         <ThanksContainer>
           <Test>
             <Text3 title="Agora, você faz parte dos">Agora, você faz parte dos</Text3>
@@ -15,10 +65,12 @@ export default function ThanksPage(){
           </Test>
           <NamesContainer>
             <NamesBox>
-              {names.map(name=> <Name>{name}</Name>)}
+              {names.map(name=> <Name>{name.name}</Name>)}
             </NamesBox>
           </NamesContainer>
         </ThanksContainer>
+        </HelmetProvider>}
+        </>
     )
 }
 
