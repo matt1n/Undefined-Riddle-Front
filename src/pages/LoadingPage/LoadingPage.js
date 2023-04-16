@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { HelmetProvider, Helmet } from "react-helmet-async";
 
-export default function ErrorPage() {
+export default function LoadingPage() {
   return (
     <>
     <HelmetProvider>
@@ -10,25 +10,20 @@ export default function ErrorPage() {
           ???????????
         </title>
       </Helmet>
-      <ErrorContainer>
+      <LoadingContainer>
         <TextContainer>
           <Text2>
-            <span aria-hidden="true">404</span>
-            404
-            <span aria-hidden="true">404</span>
-          </Text2>
-          <Text2>
-          <span aria-hidden="true">VOCÊ NÃO DEVERIA ESTAR AQUI</span>
-          VOCÊ NÃO DEVERIA ESTAR AQUI
-          <span aria-hidden="true">VOCÊ NÃO DEVERIA ESTAR AQUI</span></Text2>
+          <span aria-hidden="true">Carregando...</span>
+          Carregando...
+          <span aria-hidden="true">Carregando...</span></Text2>
         </TextContainer>
-      </ErrorContainer>
+      </LoadingContainer>
       </HelmetProvider>
     </>
   )
 }
 
-const ErrorContainer = styled.div`
+const LoadingContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;

@@ -9,6 +9,9 @@ import axios from "axios";
 import { UserContext } from "../../contexts/UserContext";
 import { useContext } from "react";
 import { useState } from "react";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import Prompt from "../../components/Prompt";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 
 export default function Fase2Page() {
@@ -27,27 +30,62 @@ export default function Fase2Page() {
       navigate("/login")
     }
     try {
-      const sim = await axios.get(`${url}/phases/2`, config)
-      setPermission(sim.data)
-      if (!sim.data) {
-        navigate("/error")
+      const res = await axios.get(`${url}/phases/2`, config)
+      setPermission(res.data)
+      setLoading(false)
+    } catch (error) {
+      console.log(error.response.data)
+    }
+  }
+
+  const [answer, setAnswer] = useState(null)
+  const [prompt, setPrompt] = useState(false)
+
+  async function sendAnswer(event){
+    event.preventDefault()
+    try {
+      const response = await axios.post(`${url}/answers/2`, {answer}, config)
+      if (response.data) {
+        navigate("/wiki")
+      } else {
+        setPrompt("error")
       }
     } catch (error) {
       console.log(error.response.data)
     }
   }
 
-  async function answer(){
-    const answer = window.prompt(`Resposta:`)
-    try {
-      const response = await axios.post(`${url}/answers/2`, {answer}, config)
-      if (response.data) {
-        navigate("/wiki")
-      }
-    } catch (error) {
-      console.log(error.response.data)
-    }
+  function activePrompt(){
+    setAnswer(null)
+    setPrompt(!prompt)
   }
+
+  const [loading, setLoading] = useState(true)
+
+  function renderPage(){
+    if (loading){
+      return <LoadingPage/>
+    } else {
+      return (
+        permission ? <HelmetProvider>
+    <Helmet>
+      <title >Esses fios estão estranhos</title>
+    </Helmet>
+    <Background src={backgroundImg}/>
+    <FullscreenContainer>
+    <FaseContainer>
+    {prompt && <Prompt prompt={prompt} sendAnswer={sendAnswer} setAnswer={setAnswer} activePrompt={activePrompt}></Prompt>}
+      <Title>#2</Title>
+      <ImageBox>
+        <Fase2Img src={fios}></Fase2Img>
+      </ImageBox>
+      <Text>Olhe mais de perto</Text>
+      <Answer onClick={()=> activePrompt()}>Responder</Answer>
+    </FaseContainer></FullscreenContainer>
+    </HelmetProvider> : <ErrorPage/>
+      )
+    }
+  } 
 
   useEffect(()=> {
     permissionVerify()
@@ -55,21 +93,7 @@ export default function Fase2Page() {
 
   return (
     <>
-    {permission && <HelmetProvider>
-    <Helmet>
-      <title >Esses fios estão estranhos</title>
-    </Helmet>
-    <Background src={backgroundImg}/>
-    <FullscreenContainer>
-    <FaseContainer>
-      <Title>#2</Title>
-      <ImageBox>
-        <Fase2Img src={fios}></Fase2Img>
-      </ImageBox>
-      <Text>Olhe mais de perto</Text>
-      <Answer onClick={()=> answer()}>Responder</Answer>
-    </FaseContainer></FullscreenContainer>
-    </HelmetProvider>}</>
+    {renderPage()}</>
   )
 }
 

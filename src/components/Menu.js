@@ -9,14 +9,14 @@ export default function Menu(){
     const href = useHref()
     const { menuActive, setMenuActive } = useContext(MenuContext);
     const {light} = useContext(LightContext)
-    function sim(){
+    function renderMenu(){
         if (href!=="/" && href!=="/login" && href!=="/registro" && href!=="/fim" && href!=="/trasfigurazione") {
             return <TfiMenu size={45} color={href === "/wiki" ? !light ? "#fff" : "#000" : "#fff"}/>
         }
     }
     return (
         <ContainerMenu onClick={()=> setMenuActive(!menuActive)}>
-            {sim()}
+            {renderMenu()}
         </ContainerMenu>
     )
 }

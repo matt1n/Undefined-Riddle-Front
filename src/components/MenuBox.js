@@ -20,7 +20,7 @@ export default function MenuBox() {
             {fases && <>
                 <MenuBoxButton onClick={()=> navigate("/batata")}>Fase 0</MenuBoxButton>
                 <MenuBoxButton onClick={()=> navigate("/amor")}>Fase 1</MenuBoxButton>
-                <MenuBoxButton onClick={()=> navigate("/fase2")}>Fase 2</MenuBoxButton>
+                <MenuBoxButton onClick={()=> navigate("/fios")}>Fase 2</MenuBoxButton>
                 <MenuBoxButton onClick={()=> navigate("/wiki")}>Fase 3</MenuBoxButton>
                 <MenuBoxButton onClick={()=> navigate("/qui_manca_qualcosa")}>Fase 4</MenuBoxButton>
                 <MenuBoxButton onClick={()=> navigate("/13")}>Fase 5</MenuBoxButton>

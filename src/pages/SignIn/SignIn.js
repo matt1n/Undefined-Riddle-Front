@@ -18,10 +18,8 @@ export default function SignIn() {
 
     try {
       const user = await axios.post(`${url}/users/signin`, {email,password})
-      console.log(user.data)
       localStorage.setItem("undefinedUser", user.data.token)
       setUser(user.data.token)
-      alert("foi")
       navigate("/batata")
     } catch (error) {
       alert("email ou senha incorretos")
@@ -32,20 +30,21 @@ export default function SignIn() {
   return (
 
     <SignInContainer>
-      <Test>
-        <Text>
+      <TextContainer>
+        <Text2>
           <span aria-hidden="true">Undefined</span>
             Undefined
           <span aria-hidden="true">Undefined</span>
-        </Text>
+        </Text2>
         <Text3 title="Riddle">Riddle</Text3>
-      </Test>
+      </TextContainer>
       <SignInForm name="signin" onSubmit={submit}>
         <Input type={"email"} placeholder="Email" onChange={e=> setEmail(e.target.value)}></Input>
         <Input type={"password"} placeholder="Senha" onChange={e=> setPassword(e.target.value)}></Input>
         <SignInButton type="submit">Entrar</SignInButton>
 
       </SignInForm>
+      <RegisterRedirect onClick={()=> navigate("/registro")}>Não está registrado? Registre-se</RegisterRedirect>
     </SignInContainer>
   )
 }
@@ -137,7 +136,7 @@ const Input = styled.input`
   }
 }
 `
-const Text = styled.p`
+const Text2 = styled.p`
   color: white;
   font-size: 5rem;
   font-weight: bold;
@@ -274,7 +273,7 @@ const Text3 = styled.div`
   font-size: 2.5rem;
 }
 `
-const Test = styled.div`
+const TextContainer = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -287,4 +286,12 @@ margin-top: 10px;
       content: 'Entrar';
     }
 
+`
+const RegisterRedirect = styled.p`
+margin-top: 10px;
+  color: #fff;
+  text-decoration: underline;
+  &:hover{
+    cursor: pointer;
+  }
 `

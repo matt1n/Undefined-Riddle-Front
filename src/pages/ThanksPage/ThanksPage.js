@@ -1,10 +1,11 @@
 import styled from "styled-components"
 import { HelmetProvider, Helmet } from "react-helmet-async";
-import { Start } from "../../assets/styles/faseStyle"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../contexts/UserContext"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import ErrorPage from "../ErrorPage/ErrorPage";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 export default function ThanksPage(){
   const [names, setNames] = useState([])
@@ -22,12 +23,9 @@ export default function ThanksPage(){
       navigate("/login")
     }
     try {
-      const sim = await axios.get(`${url}/phases/6`, config)
-      console.log(sim)
-      setPermission(sim.data)
-      if (!sim.data) {
-        navigate("/error")
-      }
+      const res = await axios.get(`${url}/phases/6`, config)
+      setPermission(res.data)
+      setLoading(false)
     } catch (error) {
       console.log(error.response.data)
     }
@@ -42,34 +40,46 @@ export default function ThanksPage(){
     }
   }
 
-  useEffect(()=> {
-    permissionVerify()
-    getNames()
-  },[])
-    return(
-      <>
-      {permission && <HelmetProvider>
+  const [loading, setLoading] = useState(true)
+
+  function renderPage(){
+    if (loading){
+      return <LoadingPage/>
+    } else {
+      return (
+        permission ? <HelmetProvider>
         <Helmet>
           <title>
             Obrigado por jogar!
           </title>
         </Helmet>
         <ThanksContainer>
-          <Test>
+          <TextContainer>
             <Text3 title="Agora, você faz parte dos">Agora, você faz parte dos</Text3>
             <Text2>
               <span aria-hidden="true">Eternizados</span>
               Eternizados
               <span aria-hidden="true">Eternizados</span>
             </Text2>
-          </Test>
+          </TextContainer>
           <NamesContainer>
             <NamesBox>
               {names.map(name=> <Name>{name.name}</Name>)}
             </NamesBox>
           </NamesContainer>
         </ThanksContainer>
-        </HelmetProvider>}
+        </HelmetProvider> : <ErrorPage/>
+      )
+    }
+  } 
+
+  useEffect(()=> {
+    permissionVerify()
+    getNames()
+  },[])
+    return(
+      <>
+      {renderPage()}
         </>
     )
 }
@@ -222,7 +232,7 @@ const Text3 = styled.div`
     font-size: 1.3em;
   }
 `
-const Test = styled.div`
+const TextContainer = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;

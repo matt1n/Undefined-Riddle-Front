@@ -7,14 +7,17 @@ export default function HomePage() {
 
   return (
     <HomeContainer>
-      <Test><Text2>
+      <TextContainer>
+        <Text2>
       <span aria-hidden="true">Undefined</span>
     Undefined
     <span aria-hidden="true">Undefined</span>
-      </Text2><Text3 title="Riddle">Riddle</Text3></Test>
+      </Text2>
+      <Text3 title="Riddle">Riddle</Text3>
+      </TextContainer>
       <Start onClick={()=> navigate("/batata")}>Começar</Start>
-      <SignIn onClick={()=> navigate("/login")}>Sign-in</SignIn>
-      <SignUp onClick={()=> navigate("/registro")}>Sign-up</SignUp>
+      <SignIn onClick={()=> navigate("/login")}>Login</SignIn>
+      <SignUp onClick={()=> navigate("/registro")}>Registro</SignUp>
     </HomeContainer>
   )
 }
@@ -171,19 +174,19 @@ export const Text3 = styled.div`
 const SignIn = styled(Start)`
 
     &:after, &:before{
-      content: 'Sign-in';
+      content: 'Login';
 
   }
 `
 const SignUp = styled(Start)`
 
     &:after, &:before{
-      content: 'Sign-up';
+      content: 'Registro';
     }
 
 `
 
-const Test = styled.div`
+const TextContainer = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;

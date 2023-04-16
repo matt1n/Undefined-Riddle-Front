@@ -60,6 +60,9 @@ strong {
 a {
   color: inherit;
 }
+button{
+	cursor: pointer;
+}
 #root {
 	overflow:auto;
 	height: 100%;

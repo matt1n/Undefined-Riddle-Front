@@ -10,6 +10,9 @@ import { useState } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import axios from "axios";
 import { useEffect } from "react";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import Prompt from "../../components/Prompt";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 
 export default function Fase3Page() {
@@ -28,40 +31,51 @@ export default function Fase3Page() {
       navigate("/login")
     }
     try {
-      const sim = await axios.get(`${url}/phases/3`, config)
-      setPermission(sim.data)
-      if (!sim.data) {
-        navigate("/error")
-      }
+      const res = await axios.get(`${url}/phases/3`, config)
+      setPermission(res.data)
+      setLoading(false)
     } catch (error) {
       console.log(error.response.data)
     }
   }
-  async function answer(){
-    const answer = window.prompt(`Resposta:`)
+
+  const [answer, setAnswer] = useState(null)
+  const [prompt, setPrompt] = useState(false)
+
+  async function sendAnswer(event){
+    event.preventDefault()
     try {
       const response = await axios.post(`${url}/answers/3`, {answer}, config)
       if (response.data) {
-        navigate("/qui_manca_qualcosa")
+        navigate("/13")
+      } else {
+        setPrompt("error")
       }
     } catch (error) {
       console.log(error.response.data)
     }
   }
 
-  useEffect(()=> {
-    permissionVerify()
-  },[permission])
+  function activePrompt(){
+    setAnswer(null)
+    setPrompt(!prompt)
+  }
 
-  return (
-    <>
-    {permission && <HelmetProvider>
+  const [loading, setLoading] = useState(true)
+
+  function renderPage(){
+    if (loading){
+      return <LoadingPage/>
+    } else {
+      return (
+        permission ? <HelmetProvider>
     <Helmet>
       <title >Não gosto desse nome</title>
     </Helmet>
     <Background src={backgroundImg}/>
     <FullscreenContainer>
     <FaseContainer light={light}>
+    {prompt && <Prompt prompt={prompt} sendAnswer={sendAnswer} setAnswer={setAnswer} activePrompt={activePrompt}></Prompt>}
       <Title light={light}>#3</Title>
       <ImageBox>
         <Fase3Img
@@ -71,10 +85,21 @@ export default function Fase3Page() {
       </ImageBox>
       <LigthButton onClick={()=> setLight(!light)} ></LigthButton>
       <Text light={light}>{!light ? "299.792.458 m/s" : "14 59"}</Text>
-      <Answer light={light} onClick={()=> answer()}>Responder</Answer>
+      <Answer light={light} onClick={()=> activePrompt()}>Responder</Answer>
     </FaseContainer></FullscreenContainer>
     
-    </HelmetProvider>}</>
+    </HelmetProvider> : <ErrorPage/>
+      )
+    }
+  } 
+
+  useEffect(()=> {
+    permissionVerify()
+  },[permission])
+
+  return (
+    <>
+    {renderPage()}</>
   )
 }
 

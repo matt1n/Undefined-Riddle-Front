@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import {useContext, useEffect, useState} from "react"
 import styled from "styled-components"
-import { Answer, Start } from "../../assets/styles/faseStyle";
+import { Start } from "../../assets/styles/faseStyle";
 import axios from "axios";
 import { UserContext } from "../../contexts/UserContext";
 import { HelmetProvider, Helmet } from "react-helmet-async";
+import ErrorPage from "../ErrorPage/ErrorPage";
+import Prompt from "../../components/Prompt";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 export default function EndPage() {
   const navigate = useNavigate();
@@ -22,24 +25,25 @@ export default function EndPage() {
       navigate("/login")
     }
     try {
-      const sim = await axios.get(`${url}/phases/end/6`, config)
-      if (sim.data==="next") {
+      const res = await axios.get(`${url}/phases/end/6`, config)
+      if (res.data==="next") {
         navigate("/obrigado")
       }
-      setPermission(sim.data)
-      if (!sim.data) {
-        navigate("/error")
-      }
+      setPermission(res.data)
+      setLoading(false)
     } catch (error) {
       console.log(error.response.data)
     }
   }
 
-  async function answer(){
-    const name = window.prompt("Me conte, como quer ser esternizado?")
-    if (name) {
+  const [answer, setAnswer] = useState(null)
+  const [prompt, setPrompt] = useState(false)
+
+  async function sendAnswer(event){
+    event.preventDefault()
+    if (answer) {
       try {
-      await axios.post(`${url}/hall/eternize`, {name}, config)
+      await axios.post(`${url}/hall/eternize`, {name: answer}, config)
       navigate("/obrigado")
     } catch (error) {
       alert(error.response.data)
@@ -47,21 +51,24 @@ export default function EndPage() {
   }
   }
 
-  async function thanks(){
-    const response = await axios.get()
+  function activePrompt(){
+    setAnswer(null)
+    setPrompt(!prompt)
   }
 
-  useEffect(()=> {
-    permissionVerify()
-  },[])
+  const [loading, setLoading] = useState(true)
 
-  return (
-    <>
-    {permission && <HelmetProvider>
+  function renderPage(){
+    if (loading){
+      return <LoadingPage/>
+    } else {
+      return (
+        permission ? <HelmetProvider>
       <Helmet>
         <title>Fim?</title>
       </Helmet>
     <EndContainer>
+    {prompt && <Prompt prompt={prompt} sendAnswer={sendAnswer} setAnswer={setAnswer} activePrompt={activePrompt} end={true}></Prompt>}
       <Text2>
             <span aria-hidden="true">Responda uma última pergunta</span>
             Responda uma última pergunta
@@ -73,9 +80,20 @@ export default function EndPage() {
             <span aria-hidden="true">E me permita te eternizar</span>
       </Text2>
       <Text3 title="Quem é você?">Quem é você?</Text3>
-      <Responder onClick={()=> answer()}>Responder</Responder>
+      <Responder onClick={()=> activePrompt()}>Responder</Responder>
     </EndContainer>
-    </HelmetProvider>}
+    </HelmetProvider> : <ErrorPage/>
+      )
+    }
+  } 
+
+  useEffect(()=> {
+    permissionVerify()
+  },[])
+
+  return (
+    <>
+    {renderPage()}
     </>
   )
 }
@@ -89,21 +107,6 @@ const EndContainer = styled.div`
   flex-direction: column;
   text-align: center;
 `
-
-const Title = styled.div`
-  color: white;
-  font-weight: 700;
-  font-size: 100px;
-  text-align: center;
-  margin-bottom: 60px;
-`
-const Congratulations = styled.div`
-  color: white;
-  font-weight: 700;
-  font-size: 60px;
-  text-align: center;
-`
-
 const Text2 = styled.p`
   color: white;
   font-size: 3rem;
@@ -243,12 +246,6 @@ const Text3 = styled.div`
 @media(max-width: 400px) {
   font-size: 2.5rem;
 }
-`
-const Test = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-margin-bottom: 15vh;
 `
 const Responder = styled(Start)`
 margin-top: 10px;

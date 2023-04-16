@@ -17,8 +17,7 @@ export default function SignUp() {
       alert("Senhas não coincidem")
     } else {
       try {
-        const user = await axios.post(`${url}/users`, {email, password})
-        console.log(user.data)
+        await axios.post(`${url}/users`, {email, password})
         navigate("/batata")
       } catch (error) {
         console.log(error.response.data)
@@ -27,20 +26,21 @@ export default function SignUp() {
   }
   return (
     <SignUpContainer>
-      <Test>
+      <TextContainer>
         <Text>
           <span aria-hidden="true">Undefined</span>
             Undefined
           <span aria-hidden="true">Undefined</span>
         </Text>
         <Text3 title="Riddle">Riddle</Text3>
-      </Test>
+      </TextContainer>
       <SignUpForm onSubmit={submit}>
         <Input type={"email"} placeholder="Email" onChange={e=> setEmail(e.target.value)}></Input>
         <Input type={"password"} placeholder="Senha" onChange={e=> setPassword(e.target.value)}></Input>
         <Input type={"password"} placeholder="Confirme sua senha" onChange={e=> setConfirm(e.target.value)}></Input>
         <SignUpButton type="submit">Registrar</SignUpButton>
       </SignUpForm>
+      <LoginRedirect onClick={()=> navigate("/login")}>Já tem um registro? Faça login</LoginRedirect>
     </SignUpContainer>
   )
 }
@@ -271,7 +271,7 @@ const Text3 = styled.div`
   font-size: 2.5rem;
 }
 `
-const Test = styled.div`
+const TextContainer = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -283,4 +283,12 @@ margin-top: 10px;
       content: 'Registrar';
     }
 
+`
+const LoginRedirect = styled.p`
+margin-top: 10px;
+  color: #fff;
+  text-decoration: underline;
+  &:hover{
+    cursor: pointer;
+  }
 `

@@ -10,9 +10,12 @@ import { useEffect } from "react";
 import axios from "axios";
 import {VscQuestion} from "react-icons/vsc"
 import styled from "styled-components";
+import Prompt from "../../components/Prompt";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 export default function Fase0Page() {
   const [tutorial, setTutorial] = useState(false);
+  const [loading, setLoading] = useState(true)
   const {user} = useContext(UserContext)
   const navigate = useNavigate()
   const [permission, setPermission] = useState(false)
@@ -27,9 +30,10 @@ export default function Fase0Page() {
       navigate("/login")
     }
     try {
-      const sim = await axios.get(`${url}/phases/0`, config)
-      setPermission(sim.data)
-      if (!sim.data) {
+      const res = await axios.get(`${url}/phases/0`, config)
+      setPermission(res.data)
+      setLoading(false)
+      if (!res.data) {
         navigate("/error")
       }
     } catch (error) {
@@ -37,25 +41,34 @@ export default function Fase0Page() {
     }
   }
 
-  async function answer(){
-    const answer = window.prompt(`Resposta:`)
+  const [answer, setAnswer] = useState(null)
+  const [prompt, setPrompt] = useState(false)
+
+  async function sendAnswer(event){
+    event.preventDefault()
     try {
       const response = await axios.post(`${url}/answers/0`, {answer}, config)
       if (response.data) {
         navigate("/amor")
+      } else {
+        setPrompt("error")
       }
     } catch (error) {
       console.log(error.response.data)
     }
   }
 
-  useEffect(()=> {
-    permissionVerify()
-  },[permission])
+  function activePrompt(){
+    setAnswer(null)
+    setPrompt(!prompt)
+  }
 
-  return (
-    <>
-    {permission && <HelmetProvider>
+  function renderPage(){
+    if (loading){
+      return <LoadingPage/>
+    } else {
+      return (
+        (permission) && <HelmetProvider>
     <>
     <Helmet>
       <title>Tutorial</title>
@@ -67,18 +80,31 @@ export default function Fase0Page() {
         <ContainerTip onClick={()=> setTutorial(true)}>
           <VscQuestion color="white" size={45}></VscQuestion>
         </ContainerTip>
+        {prompt && <Prompt prompt={prompt} sendAnswer={sendAnswer} setAnswer={setAnswer} activePrompt={activePrompt}></Prompt>}
         <Title>#0</Title>
         <ImageBox>
         <FaseImage src="https://images.emojiterra.com/google/noto-emoji/v2.034/512px/1f50e.png"></FaseImage>
         </ImageBox>
         <Text>URL</Text>
-        <Answer onClick={()=> answer()}>
+        <Answer onClick={()=> activePrompt()}>
           Responder
         </Answer>
       </FaseContainer>
       </FullscreenContainer>
     </>
-    </HelmetProvider>}</>
+    </HelmetProvider>
+      )
+    }
+  } 
+
+  useEffect(()=> {
+    permissionVerify()
+  },[permission])
+
+  return (
+    <>
+    {renderPage()}
+    </>
   )
 }
 
