@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContainer, ImageBox } from "../../assets/styles/faseStyle";
-import cesar from "../../assets/imgs/Xjmvçõzn zh yznomjçjn Iph vmqjmzyj.jpeg"
+import cesar from "../../assets/imgs/cesar.jpeg"
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import backgroundImg from "../../assets/imgs/background3.gif"
 import { useEffect } from "react";

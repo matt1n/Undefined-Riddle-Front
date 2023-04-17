@@ -10,6 +10,7 @@ import { UserContext } from "../../contexts/UserContext";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Prompt from "../../components/Prompt";
 import LoadingPage from "../LoadingPage/LoadingPage";
+import invert from "../../assets/imgs/Inverter.png"
 
 
 export default function Fase1Page() {
@@ -74,7 +75,7 @@ export default function Fase1Page() {
       {prompt && <Prompt prompt={prompt} sendAnswer={sendAnswer} setAnswer={setAnswer} activePrompt={activePrompt}></Prompt>}
         <Title>#1</Title>
         <ImageBox>
-          <FaseImage src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Refresh_icon.png"></FaseImage>
+          <FaseImage src={invert}></FaseImage>
         </ImageBox>
         <Text>Urbs Aeterna</Text>
         <Answer onClick={()=> activePrompt()}>

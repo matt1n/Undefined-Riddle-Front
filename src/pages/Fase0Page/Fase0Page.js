@@ -12,6 +12,7 @@ import {VscQuestion} from "react-icons/vsc"
 import styled from "styled-components";
 import Prompt from "../../components/Prompt";
 import LoadingPage from "../LoadingPage/LoadingPage";
+import magnifier from "../../assets/imgs/Lupa.png"
 
 export default function Fase0Page() {
   const [tutorial, setTutorial] = useState(false);
@@ -83,7 +84,7 @@ export default function Fase0Page() {
         {prompt && <Prompt prompt={prompt} sendAnswer={sendAnswer} setAnswer={setAnswer} activePrompt={activePrompt}></Prompt>}
         <Title>#0</Title>
         <ImageBox>
-        <FaseImage src="https://images.emojiterra.com/google/noto-emoji/v2.034/512px/1f50e.png"></FaseImage>
+        <FaseImage src={magnifier}></FaseImage>
         </ImageBox>
         <Text>URL</Text>
         <Answer onClick={()=> activePrompt()}>
