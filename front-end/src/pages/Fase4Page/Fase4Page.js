@@ -29,7 +29,7 @@ export default function Fase5Page() {
       navigate("/login")
     }
     try {
-      const res = await axios.get(`${url}/phases/5`, config)
+      const res = await axios.get(`${url}/phases/4`, config)
       setPermission(res.data)
       setLoading(false)
     } catch (error) {
