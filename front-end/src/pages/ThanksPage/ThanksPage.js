@@ -12,7 +12,7 @@ export default function ThanksPage(){
   const navigate = useNavigate()
   const {user} = useContext(UserContext)
   const [permission, setPermission] = useState(false)
-  const url = process.env.REACT_APP_API_BASE_URL
+  const url = process.env.REACT_APP_BACK_END_URL
   const config = {
     headers: {
       Authorization: `Bearer ${user}`,

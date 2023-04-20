@@ -20,7 +20,7 @@ export default function Fase0Page() {
   const {user} = useContext(UserContext)
   const navigate = useNavigate()
   const [permission, setPermission] = useState(false)
-  const url = process.env.REACT_APP_API_BASE_URL
+  const url = process.env.REACT_APP_BACK_END_URL
   const config = {
     headers: {
       Authorization: `Bearer ${user}`,

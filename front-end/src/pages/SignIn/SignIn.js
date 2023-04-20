@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 export default function SignIn() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const url = process.env.REACT_APP_API_BASE_URL;
+  const url = process.env.REACT_APP_BACK_END_URL;
   const {setUser} = useContext(UserContext)
   const navigate = useNavigate()
   
@@ -23,6 +23,7 @@ export default function SignIn() {
       navigate("/batata")
     } catch (error) {
       alert("email ou senha incorretos")
+      console.log(error.respose.data)
     }
     
   }
