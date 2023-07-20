@@ -8,8 +8,9 @@ import LoadingPage from "../LoadingPage/LoadingPage";
 
 import usePhaseAuth from "../../hooks/api/usePhaseAuth";
 import useToken from "../../hooks/useToken";
-import { Text2, Text3 } from "../../assets/styles/faseStyle";
+import { Background, FaseContainer, FullscreenContainer, Text2, Text3 } from "../../assets/styles/faseStyle";
 import { TextContainer } from "../HomePage/HomePage";
+import backgroundImg from "../../assets/imgs/background3.gif"
 
 export default function ThanksPage(){
   const [names, setNames] = useState([])
@@ -57,6 +58,8 @@ export default function ThanksPage(){
             Obrigado por jogar!
           </title>
         </Helmet>
+        <BackgroundEnd src={backgroundImg}/>
+        <FullscreenContainer>
         <ThanksContainer>
           <ThanksTextContainer>
             <GlitchText3 title="Agora, você faz parte dos">Agora, você faz parte dos</GlitchText3>
@@ -72,6 +75,7 @@ export default function ThanksPage(){
             </NamesBox>
           </NamesContainer>
         </ThanksContainer>
+        </FullscreenContainer>
         </HelmetProvider> : <ErrorPage/>
       )
     }
@@ -88,13 +92,20 @@ export default function ThanksPage(){
     )
 }
 
-const ThanksContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
+const ThanksContainer = styled(FaseContainer)`
+  width: 70%;
+  background-color: none;
+  background: none;
+  
+  @media (max-width: 1150px) {
+    background-color: none;
+  }
+`
+
+const BackgroundEnd = styled(Background)`
+@media(max-width: 1150px) {
+  display: inherit;
+}
 `
 
 
