@@ -7,7 +7,6 @@ import { HelmetProvider, Helmet } from "react-helmet-async";
 import clicked from "../../assets/imgs/clickedbutton.png";
 import backgroundImg from "../../assets/imgs/background3.gif"
 import { useState } from "react";
-import { UserContext } from "../../contexts/UserContext";
 import axios from "axios";
 import { useEffect } from "react";
 import ErrorPage from "../ErrorPage/ErrorPage";
@@ -15,11 +14,14 @@ import Prompt from "../../components/Prompt";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import switchImg from "../../assets/imgs/Interruptor.png"
 
+import usePhaseAuth from "../../hooks/api/usePhaseAuth";
+import useToken from "../../hooks/useToken";
+import usePostAnswer from "../../hooks/api/useAnswer";
 
 export default function Fase3Page() {
   const {light, setLight} = useContext(LightContext)
   const navigate = useNavigate()
-  const {user} = useContext(UserContext)
+  const user = useToken()
   const [permission, setPermission] = useState(false)
   const url = process.env.REACT_APP_BACK_END_URL
   const config = {
@@ -27,33 +29,36 @@ export default function Fase3Page() {
       Authorization: `Bearer ${user}`,
     },
   };
+
+  const {phaseAuth,phaseAuthError,phaseAuthLoading} = usePhaseAuth()
+
   async function permissionVerify(){
     if(!user){
       navigate("/login")
     }
     try {
-      const res = await axios.get(`${url}/phases/3`, config)
-      setPermission(res.data)
-      setLoading(false)
+      const res = await phaseAuth(3)
+      setPermission(res)
     } catch (error) {
-      console.log(error.response.data)
+      console.log(phaseAuthError)
     }
   }
-
+  
+  const {postAnswer, postAnswerError} = usePostAnswer()
   const [answer, setAnswer] = useState(null)
   const [prompt, setPrompt] = useState(false)
 
   async function sendAnswer(event){
     event.preventDefault()
     try {
-      const response = await axios.post(`${url}/answers/3`, {answer}, config)
-      if (response.data) {
+      const response = await postAnswer(answer, 3)
+      if (response) {
         navigate("/13")
       } else {
         setPrompt("error")
       }
     } catch (error) {
-      console.log(error.response.data)
+      console.log(postAnswerError)
     }
   }
 
@@ -62,10 +67,8 @@ export default function Fase3Page() {
     setPrompt(!prompt)
   }
 
-  const [loading, setLoading] = useState(true)
-
   function renderPage(){
-    if (loading){
+    if (phaseAuthLoading){
       return <LoadingPage/>
     } else {
       return (

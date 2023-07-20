@@ -1,22 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FaseContainer,Answer,FaseImage,Text,Title, Background, FullscreenContainer, ImageBox } from "../../assets/styles/faseStyle";
-import cesar from "../../assets/imgs/cesar.jpeg"
+import cesar from "../../assets/imgs/Xjmvçõzn zh yznomjçjn Iph vmqjmzyj.jpeg"
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import backgroundImg from "../../assets/imgs/background3.gif"
 import { useEffect } from "react";
 import axios from "axios";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
 import { useState } from "react";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Prompt from "../../components/Prompt";
 import LoadingPage from "../LoadingPage/LoadingPage";
 
+import usePhaseAuth from "../../hooks/api/usePhaseAuth";
+import useToken from "../../hooks/useToken";
+import usePostAnswer from "../../hooks/api/useAnswer";
 
 export default function Fase5Page() {
   const navigate = useNavigate()
-  const {user} = useContext(UserContext)
+  const user = useToken()
   const [permission, setPermission] = useState(false)
   const url = process.env.REACT_APP_BACK_END_URL
   const config = {
@@ -24,33 +25,36 @@ export default function Fase5Page() {
       Authorization: `Bearer ${user}`,
     },
   };
+
+  const {phaseAuth,phaseAuthError,phaseAuthLoading} = usePhaseAuth()
+
   async function permissionVerify(){
     if(!user){
       navigate("/login")
     }
     try {
-      const res = await axios.get(`${url}/phases/4`, config)
-      setPermission(res.data)
-      setLoading(false)
+      const res = await phaseAuth(4)
+      setPermission(res)
     } catch (error) {
-      console.log(error.response.data)
+      console.log(phaseAuthError)
     }
   }
 
+  const {postAnswer, postAnswerError} = usePostAnswer()
   const [answer, setAnswer] = useState(null)
   const [prompt, setPrompt] = useState(false)
 
   async function sendAnswer(event){
     event.preventDefault()
     try {
-      const response = await axios.post(`${url}/answers/4`, {answer}, config)
-      if (response.data) {
+      const response = await postAnswer(answer, 4)
+      if (response) {
         navigate("/qui_manca_qualcosa")
       } else {
         setPrompt("error")
       }
     } catch (error) {
-      console.log(error.response.data)
+      console.log(postAnswerError)
     }
   }
 
@@ -59,10 +63,8 @@ export default function Fase5Page() {
     setPrompt(!prompt)
   }
 
-  const [loading, setLoading] = useState(true)
-
   function renderPage(){
-    if (loading){
+    if (phaseAuthLoading){
       return <LoadingPage/>
     } else {
       return (
@@ -78,7 +80,7 @@ export default function Fase5Page() {
       <ImageBox>
         <Fase5Img src={cesar}></Fase5Img>
       </ImageBox>
-      <TextFase5>Iy ras wivme iwwe qypliv uyi glsve</TextFase5>
+      <TextFase5>Iy res wivme iwwe qypliv uyi glsve</TextFase5>
       <Answer onClick={()=> activePrompt()}>Responder</Answer>
     </FaseContainer></FullscreenContainer>
     

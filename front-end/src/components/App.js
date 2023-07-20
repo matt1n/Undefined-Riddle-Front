@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage/HomePage";
 
 import "../assets/styles/reset.css"
+import "../assets/styles/keyframes.css"
 import Fase0Page from "../pages/Fase0Page/Fase0Page";
 import Fase1Page from "../pages/Fase1Page/Fase1Page";
 import Fase2Page from "../pages/Fase2Page/Fase2Page";

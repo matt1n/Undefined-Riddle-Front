@@ -5,17 +5,19 @@ import backgroundImg from "../../assets/imgs/background3.gif"
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Prompt from "../../components/Prompt";
 import LoadingPage from "../LoadingPage/LoadingPage";
 import invert from "../../assets/imgs/Inverter.png"
 
+import usePhaseAuth from "../../hooks/api/usePhaseAuth";
+import useToken from "../../hooks/useToken";
+import usePostAnswer from "../../hooks/api/useAnswer";
+
 
 export default function Fase1Page() {
   const navigate = useNavigate()
-  const {user} = useContext(UserContext)
+  const user = useToken()
   const [permission, setPermission] = useState(false)
   const url = process.env.REACT_APP_BACK_END_URL
   const config = {
@@ -23,33 +25,36 @@ export default function Fase1Page() {
       Authorization: `Bearer ${user}`,
     },
   };
+
+  const {phaseAuth,phaseAuthError,phaseAuthLoading} = usePhaseAuth()
+
   async function permissionVerify(){
     if(!user){
       navigate("/login")
     }
     try {
-      const res = await axios.get(`${url}/phases/1`, config)
-      setPermission(res.data)
-      setLoading(false)
+      const response = await phaseAuth(1)
+      setPermission(response)
     } catch (error) {
-      console.log(error.response.data)
+      console.log(phaseAuthError)
     }
   }
 
+  const {postAnswer, postAnswerError} = usePostAnswer()
   const [answer, setAnswer] = useState(null)
   const [prompt, setPrompt] = useState(false)
 
   async function sendAnswer(event){
     event.preventDefault()
     try {
-      const response = await axios.post(`${url}/answers/1`, {answer}, config)
-      if (response.data) {
+      const response = await postAnswer(answer,1)
+      if (response) {
         navigate("/fios")
       } else {
         setPrompt("error")
       }
     } catch (error) {
-      console.log(error.response.data)
+      console.log(postAnswerError)
     }
   }
 
@@ -58,10 +63,8 @@ export default function Fase1Page() {
     setPrompt(!prompt)
   }
 
-  const [loading, setLoading] = useState(true)
-
   function renderPage(){
-    if (loading){
+    if (phaseAuthLoading){
       return <LoadingPage/>
     } else {
       return (
@@ -94,7 +97,8 @@ export default function Fase1Page() {
 
   return (
     <>
-    {renderPage()}</>
+      {renderPage()}
+    </>
   )
 }
 

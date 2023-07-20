@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import { HelmetProvider, Helmet } from "react-helmet-async";
+import { Text2 } from "../../assets/styles/faseStyle";
+import { TextContainer } from "../HomePage/HomePage";
 
 export default function LoadingPage() {
   return (
@@ -11,12 +13,12 @@ export default function LoadingPage() {
         </title>
       </Helmet>
       <LoadingContainer>
-        <TextContainer>
-          <Text2>
+        <TextContainerError>
+          <Text>
           <span aria-hidden="true">Carregando...</span>
           Carregando...
-          <span aria-hidden="true">Carregando...</span></Text2>
-        </TextContainer>
+          <span aria-hidden="true">Carregando...</span></Text>
+        </TextContainerError>
       </LoadingContainer>
       </HelmetProvider>
     </>
@@ -33,81 +35,12 @@ const LoadingContainer = styled.div`
   background-color: #000;
 `
 
-const Text2 = styled.p`
-  color: white;
-  font-size: 5rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  position: relative;
-  text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
-    0.025em 0.04em 0 #fffc00;
-  animation: glitch 725ms infinite;
+const Text = styled(Text2)`
   &:first-child {
     margin-bottom: 50px;
   }
-  
-
-span {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-span:first-child {
-  animation: glitch 500ms infinite;
-  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-  transform: translate(-0.04em, -0.03em);
-  opacity: 0.75;
-}
-
-span:last-child {
-  animation: glitch 375ms infinite;
-  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-  transform: translate(0.04em, 0.03em);
-  opacity: 0.75;
-}
-
-@keyframes glitch {
-  0% {
-    text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
-      0.025em 0.04em 0 #fffc00;
-  }
-  15% {
-    text-shadow: 0.05em 0 0 #00fffc, -0.03em -0.04em 0 #fc00ff,
-      0.025em 0.04em 0 #fffc00;
-  }
-  16% {
-    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff,
-      -0.05em -0.05em 0 #fffc00;
-  }
-  49% {
-    text-shadow: -0.05em -0.025em 0 #00fffc, 0.025em 0.035em 0 #fc00ff,
-      -0.05em -0.05em 0 #fffc00;
-  }
-  50% {
-    text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff,
-      0 -0.04em 0 #fffc00;
-  }
-  99% {
-    text-shadow: 0.05em 0.035em 0 #00fffc, 0.03em 0 0 #fc00ff,
-      0 -0.04em 0 #fffc00;
-  }
-  100% {
-    text-shadow: -0.05em 0 0 #00fffc, -0.025em -0.04em 0 #fc00ff,
-      -0.04em -0.025em 0 #fffc00;
-  }
-}
-
-@media(max-width: 600px) {
-  font-size: 3rem;
-}
-@media(max-width: 360px) {
-  font-size: 2.5rem;
-}
 `
 
-const TextContainer = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
+const TextContainerError = styled(TextContainer)`
+margin-bottom: 0;
 `
