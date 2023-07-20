@@ -124,8 +124,8 @@ const LigthButton = styled.button`
   top: 262px;
   @media(max-width: 600px) {
   top: 242px;
-}
-@media(max-width: 360px) {
+  @media(max-width: 320px) {
   top: 205px;
+}
 }
 `
